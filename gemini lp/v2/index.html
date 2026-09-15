@@ -1,0 +1,2159 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>structly.app — Systems Behind the Experience</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;600;700&family=Libre+Franklin:wght@400;500;600;700&family=Sora:ital,wght@0,600;0,700;0,800;1,800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #FFF8F0;
+      --paper: #FFFFFF;
+      --charcoal: #111827;
+      --charcoal-soft: #3D405B;
+      --orange: #FF5A00;
+      --terracotta: #E07A5F;
+      --sage: #688F7A;
+      --sage-light: #EBF2EC;
+      --warm-cream: #FFF3EA;
+      --peach: #FFEAD6;
+      --peach-light: #FFF2E8;
+      --border: #111827;
+      --gray-muted: #6B7280;
+      --card-shadow: 4px 4px 0px #111827;
+      --card-shadow-hover: 7px 7px 0px #111827;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'IBM Plex Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--charcoal);
+      line-height: 1.6;
+      overflow-x: hidden;
+      background-image: radial-gradient(#E2D9CD 1px, transparent 1px);
+      background-size: 24px 24px;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* Top Navigation */
+    header.site-nav {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      background: rgba(255, 248, 240, 0.94);
+      backdrop-filter: blur(10px);
+      border-bottom: 2.5px solid var(--border);
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 76px;
+    }
+
+    .nav-brand img {
+      height: 44px;
+      width: auto;
+      display: block;
+      transition: transform 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .nav-brand img:hover {
+      transform: scale(1.06) rotate(-1deg);
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 22px;
+      font-size: 14px;
+      font-weight: 700;
+    }
+
+    .nav-links a {
+      transition: color 0.15s ease;
+    }
+    .nav-links a:hover {
+      color: var(--orange);
+    }
+
+    .nav-cta {
+      background: var(--charcoal);
+      color: #fff !important;
+      padding: 10px 22px;
+      border-radius: 999px;
+      border: 2px solid var(--charcoal);
+      box-shadow: 3px 3px 0px var(--border);
+      transition: all 0.15s ease;
+    }
+    .nav-cta:hover {
+      background: var(--orange);
+      border-color: var(--border);
+      color: #fff !important;
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px var(--border);
+    }
+
+    /* Hero Section */
+    .hero-section {
+      padding: 68px 0 50px;
+      text-align: center;
+      position: relative;
+    }
+
+    .hero-pill-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #fff;
+      border: 2px solid var(--border);
+      padding: 6px 18px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 24px;
+      box-shadow: 3px 3px 0px var(--border);
+    }
+    .hero-pill-badge .pulse-dot {
+      width: 9px;
+      height: 9px;
+      background: var(--orange);
+      border-radius: 50%;
+      animation: dotPulse 1.8s infinite;
+    }
+    @keyframes dotPulse {
+      0% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 90, 0, 0.7); }
+      70% { transform: scale(1); box-shadow: 0 0 0 8px rgba(255, 90, 0, 0); }
+      100% { transform: scale(0.95); box-shadow: 0 0 0 0 rgba(255, 90, 0, 0); }
+    }
+
+    .hero-logo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 26px;
+    }
+    .hero-logo-wrap img {
+      max-width: 550px;
+      width: 100%;
+      height: auto;
+      filter: drop-shadow(0 18px 24px rgba(0,0,0,0.12));
+      transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+    }
+    .hero-logo-wrap img:hover {
+      transform: scale(1.04) rotate(-0.75deg);
+    }
+
+    /* Stacked Headline Lockup with Sage Underline */
+    .hero-tagline-wrap {
+      position: relative;
+      display: inline-block;
+      margin: 0 auto 20px;
+      padding: 8px 20px;
+    }
+    .hero-tagline-wrap::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 120%;
+      height: 140%;
+      background: radial-gradient(circle, rgba(255, 138, 51, 0.10) 0%, rgba(255, 248, 240, 0) 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    .hero-tagline {
+      position: relative;
+      z-index: 1;
+      font-family: 'Fredoka', sans-serif;
+      font-size: clamp(2.8rem, 6.2vw, 4.5rem);
+      font-weight: 700;
+      line-height: 1.06;
+      letter-spacing: -0.02em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .tagline-top {
+      color: #111827;
+      display: block;
+      transform: rotate(-1.5deg);
+      transform-origin: left center;
+    }
+    .tagline-bottom-wrap {
+      position: relative;
+      display: inline-block;
+      color: #FF5A00;
+      margin-top: 4px;
+      transform: rotate(-0.5deg);
+    }
+    .tagline-bottom-text {
+      display: block;
+      position: relative;
+      z-index: 2;
+    }
+    .tagline-brush-underline {
+      position: absolute;
+      left: -2%;
+      bottom: -10px;
+      width: 104%;
+      height: 16px;
+      pointer-events: none;
+      z-index: 1;
+    }
+
+    .hero-subhead {
+      font-size: 1.2rem;
+      max-width: 720px;
+      margin: 0 auto 38px;
+      color: var(--charcoal-soft);
+      font-weight: 500;
+      line-height: 1.6;
+    }
+
+    /* 3 Columns of Stacked Unit Anchor Buttons */
+    .hero-units-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+      max-width: 960px;
+      margin: 0 auto;
+    }
+
+    .unit-hero-btn {
+      background: var(--paper);
+      border: 2.5px solid var(--border);
+      border-radius: 14px;
+      padding: 18px 20px;
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--charcoal);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      box-shadow: var(--card-shadow);
+      transition: all 0.18s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: pointer;
+    }
+    .unit-hero-btn:hover {
+      transform: translate(-3px, -3px);
+      box-shadow: var(--card-shadow-hover);
+      background: var(--warm-cream);
+      border-color: var(--charcoal);
+    }
+    .unit-hero-btn .btn-arrow {
+      font-size: 18px;
+      color: var(--orange);
+      font-weight: 800;
+    }
+    .unit-hero-btn .dot-tag {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--sage);
+      display: inline-block;
+      flex-shrink: 0;
+    }
+    .unit-hero-btn .dot-tag.orange {
+      background: var(--orange);
+    }
+
+    /* Marquee Ticker */
+    .ticker-bar {
+      background: var(--charcoal);
+      color: #fff;
+      padding: 14px 0;
+      border-top: 2.5px solid var(--border);
+      border-bottom: 2.5px solid var(--border);
+      overflow: hidden;
+      white-space: nowrap;
+      margin: 50px 0 70px;
+    }
+    .ticker-track {
+      display: inline-block;
+      white-space: nowrap;
+      animation: marquee 32s linear infinite;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      letter-spacing: 0.6px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+    .ticker-track span {
+      margin: 0 28px;
+    }
+    .ticker-track span.accent {
+      color: var(--orange);
+      font-weight: 700;
+    }
+    @keyframes marquee {
+      0% { transform: translateX(0); }
+      100% { transform: translateX(-50%); }
+    }
+
+    /* Section Typography */
+    .section-title-wrap {
+      margin-bottom: 44px;
+    }
+    .badge-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: var(--peach);
+      border: 2px solid var(--border);
+      color: var(--charcoal);
+      font-size: 12px;
+      font-weight: 800;
+      padding: 4px 14px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.6px;
+      margin-bottom: 12px;
+      box-shadow: 2px 2px 0px var(--border);
+    }
+    .section-title {
+      font-family: 'Sora', sans-serif;
+      font-size: clamp(2rem, 3.5vw, 2.6rem);
+      font-weight: 800;
+      color: var(--charcoal);
+      letter-spacing: -0.6px;
+    }
+    .section-desc {
+      color: var(--charcoal-soft);
+      font-size: 16px;
+      max-width: 640px;
+      margin-top: 10px;
+    }
+
+    /* Business Units */
+    .units-container {
+      display: flex;
+      flex-direction: column;
+      gap: 52px;
+      margin-bottom: 90px;
+    }
+
+    .unit-card {
+      background: var(--paper);
+      border: 2.5px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 6px 6px 0px var(--border);
+      overflow: hidden;
+      display: grid;
+      grid-template-columns: 1.25fr 1fr;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      min-width: 0;
+    }
+    .unit-card:hover {
+      transform: translateY(-3px);
+      box-shadow: 9px 9px 0px var(--border);
+    }
+
+    .unit-card-content {
+      padding: 44px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    .unit-status-chip {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 4px 12px;
+      border-radius: 999px;
+      border: 1.5px solid var(--border);
+      margin-bottom: 18px;
+      width: fit-content;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .status-live {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+    .status-dev {
+      background: #FEF3C7;
+      color: #92400E;
+    }
+    .status-open {
+      background: #E0E7FF;
+      color: #3730A3;
+    }
+
+    .unit-logo-holder {
+      margin-bottom: 20px;
+      min-height: 52px;
+      display: flex;
+      align-items: center;
+    }
+    .unit-logo-holder img {
+      max-height: 54px;
+      width: auto;
+      max-width: 100%;
+      object-fit: contain;
+    }
+
+    .form-future-holder {
+      margin-bottom: 10px;
+    }
+    .form-future-holder img {
+      max-height: 72px;
+    }
+
+    .unit-typographic-logo {
+      font-family: 'Fredoka', 'Sora', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.15;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+    .unit-typographic-logo.stacked-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0px;
+    }
+    .unit-typographic-logo .accent-part {
+      color: var(--orange);
+    }
+
+    .unit-headline {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.45rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+      color: var(--charcoal);
+      overflow-wrap: break-word;
+    }
+
+    .unit-description {
+      color: var(--charcoal-soft);
+      font-size: 15px;
+      line-height: 1.65;
+      margin-bottom: 26px;
+      overflow-wrap: break-word;
+    }
+
+    /* Two-Column Grid */
+    .feature-grid {
+      display: grid;
+      grid-template-columns: 180px 1fr;
+      column-gap: 10px;
+      row-gap: 10px;
+      margin-bottom: 30px;
+      font-size: 14px;
+      border-top: 1.5px dashed #E5E7EB;
+      padding-top: 16px;
+      min-width: 0;
+    }
+    .feature-label {
+      font-weight: 700;
+      color: var(--charcoal);
+      display: flex;
+      align-items: baseline;
+      gap: 6px;
+      white-space: nowrap;
+    }
+    .feature-label::before {
+      content: "•";
+      color: var(--orange);
+      font-size: 16px;
+      line-height: 0;
+    }
+    .feature-val {
+      color: var(--charcoal-soft);
+      line-height: 1.45;
+      overflow-wrap: break-word;
+    }
+
+    .unit-action-wrap {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .btn-primary {
+      background: var(--orange);
+      color: #fff;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 24px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      box-shadow: 3px 3px 0px var(--border);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-primary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px var(--border);
+      background: #e85200;
+    }
+
+    .btn-secondary {
+      background: #fff;
+      color: var(--charcoal);
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      padding: 12px 20px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      box-shadow: 3px 3px 0px var(--border);
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      white-space: nowrap;
+    }
+    .btn-secondary:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 5px 5px 0px var(--border);
+      background: var(--warm-cream);
+    }
+
+    .unit-card-preview {
+      background: var(--warm-cream);
+      border-left: 2.5px solid var(--border);
+      padding: 40px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      position: relative;
+      min-width: 0;
+    }
+
+    .preview-box {
+      background: #fff;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 4px 4px 0px var(--border);
+      min-width: 0;
+    }
+    .preview-box-header {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      text-transform: uppercase;
+      font-weight: 700;
+      color: var(--gray-muted);
+      border-bottom: 1.5px dashed var(--border);
+      padding-bottom: 12px;
+      margin-bottom: 16px;
+      display: flex;
+      justify-content: space-between;
+      gap: 8px;
+    }
+
+    .dossier-step {
+      display: flex;
+      gap: 12px;
+      margin-bottom: 14px;
+      align-items: flex-start;
+    }
+    .dossier-num {
+      width: 24px;
+      height: 24px;
+      background: var(--charcoal);
+      color: #fff;
+      border-radius: 6px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+    .dossier-step-text strong {
+      display: block;
+      font-size: 13px;
+      color: var(--charcoal);
+    }
+    .dossier-step-text span {
+      font-size: 12px;
+      color: var(--charcoal-soft);
+    }
+
+    .score-badge {
+      background: #EBF2EC;
+      border: 1.5px solid var(--sage);
+      border-radius: 8px;
+      padding: 10px 14px;
+      margin-top: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .score-badge-val {
+      font-family: 'Sora', sans-serif;
+      font-weight: 800;
+      font-size: 18px;
+      color: var(--sage);
+    }
+
+    /* Everyday AI Interactive Sandbox */
+    .interactive-wrap {
+      background: var(--paper);
+      border: 2.5px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 6px 6px 0px var(--border);
+      padding: 48px;
+      margin: 80px 0;
+      min-width: 0;
+    }
+
+    .interactive-grid {
+      display: grid;
+      grid-template-columns: 1fr 1.15fr;
+      gap: 40px;
+      margin-top: 32px;
+      align-items: start;
+      min-width: 0;
+    }
+
+    .sandbox-controls {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .day-selector {
+      display: flex;
+      gap: 10px;
+    }
+    .day-btn {
+      flex: 1;
+      padding: 14px 10px;
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      background: #fff;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-weight: 700;
+      font-size: 13px;
+      cursor: pointer;
+      transition: all 0.15s ease;
+      box-shadow: 2px 2px 0px var(--border);
+    }
+    .day-btn.active {
+      background: var(--terracotta);
+      color: #fff;
+      transform: translate(-1px, -1px);
+      box-shadow: 4px 4px 0px var(--border);
+    }
+
+    .sandbox-output {
+      background: var(--bg);
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      padding: 28px;
+      box-shadow: 4px 4px 0px var(--border);
+      min-width: 0;
+    }
+
+    .slog-vs-win {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-bottom: 20px;
+      min-width: 0;
+    }
+    .slog-box {
+      background: #FEE2E2;
+      border: 1.5px solid #DC2626;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 13px;
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+    .win-box {
+      background: #DCFCE7;
+      border: 1.5px solid #16A34A;
+      border-radius: 10px;
+      padding: 14px;
+      font-size: 13px;
+      min-width: 0;
+      overflow-wrap: break-word;
+    }
+
+    .quick-setup-box {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      background: #F3F4F6;
+      padding: 14px;
+      border-radius: 10px;
+      border: 1px solid #E5E7EB;
+      margin: 14px 0;
+      word-break: break-word;
+      overflow-wrap: anywhere;
+      white-space: pre-wrap;
+      line-height: 1.5;
+    }
+
+    /* System Architecture */
+    .system-arch-section {
+      background: var(--charcoal);
+      color: #fff;
+      border: 2.5px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 6px 6px 0px var(--border);
+      padding: 56px 44px;
+      margin-bottom: 80px;
+      min-width: 0;
+    }
+    .system-arch-section .badge-pill {
+      background: #2E2E2E;
+      border-color: var(--sage);
+      color: #fff;
+    }
+    .system-arch-section .section-title {
+      color: #fff;
+    }
+    .system-arch-section .section-desc {
+      color: #D1D5DB;
+    }
+
+    .arch-duo-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 28px;
+      margin-top: 36px;
+    }
+
+    .arch-card {
+      border: 2px solid #374151;
+      border-radius: 16px;
+      padding: 34px;
+      background: #1A1F2C;
+    }
+    .arch-card.highlight {
+      border-color: var(--orange);
+    }
+    .arch-card h4 {
+      font-family: 'Sora', sans-serif;
+      font-size: 1.35rem;
+      margin-bottom: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .arch-card p {
+      font-size: 14px;
+      color: #9CA3AF;
+      line-height: 1.6;
+      margin-bottom: 20px;
+    }
+    .arch-specs-list {
+      list-style: none;
+      font-size: 13px;
+      font-family: 'JetBrains Mono', monospace;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      color: #E5E7EB;
+    }
+    .arch-specs-list li {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .arch-specs-list li::before {
+      content: "▹";
+      color: var(--orange);
+    }
+
+    /* Newsletter Hub */
+    .newsletter-section {
+      background: var(--paper);
+      border: 2.5px solid var(--border);
+      border-radius: 22px;
+      box-shadow: 6px 6px 0px var(--border);
+      padding: 50px 40px;
+      margin-bottom: 80px;
+      min-width: 0;
+    }
+
+    .newsletter-form-wrap {
+      max-width: 760px;
+      margin: 32px auto 0;
+    }
+
+    .unit-selection-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+      margin-bottom: 24px;
+    }
+
+    .newsletter-checkbox-label {
+      border: 2px solid var(--border);
+      border-radius: 12px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      background: #fff;
+      transition: all 0.15s ease;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .newsletter-checkbox-label.disabled-state {
+      background: #F9FAFB;
+      border-color: #D1D5DB;
+      color: #9CA3AF;
+      cursor: not-allowed;
+      opacity: 0.75;
+    }
+
+    .newsletter-checkbox-label:not(.disabled-state):hover {
+      background: var(--warm-cream);
+      border-color: var(--orange);
+    }
+
+    .newsletter-checkbox-label input {
+      margin-right: 10px;
+      accent-color: var(--orange);
+      width: 16px;
+      height: 16px;
+    }
+
+    .pill-status-micro {
+      font-size: 10px;
+      font-weight: 700;
+      padding: 2px 8px;
+      border-radius: 999px;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+    .micro-live {
+      background: #D1FAE5;
+      color: #065F46;
+    }
+    .micro-waitlist {
+      background: #F3F4F6;
+      color: #6B7280;
+      border: 1px solid #E5E7EB;
+    }
+
+    .newsletter-input-row {
+      display: flex;
+      gap: 12px;
+    }
+    .newsletter-input-row input[type="email"] {
+      flex: 1;
+      border: 2px solid var(--border);
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-family: 'IBM Plex Sans', sans-serif;
+      font-size: 15px;
+      background: #fff;
+    }
+    .newsletter-input-row input[type="email"]:focus {
+      outline: none;
+      border-color: var(--orange);
+    }
+
+    /* Redesigned Footer & Planetary Orbit System */
+    footer.site-footer {
+      background: #fff;
+      border-top: 2.5px solid var(--border);
+      padding: 60px 0 40px;
+    }
+
+    .footer-grid-three {
+      display: grid;
+      grid-template-columns: 1.15fr 1fr 1.15fr;
+      gap: 30px;
+      align-items: center;
+      margin-bottom: 50px;
+    }
+
+    .footer-brand-col {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .footer-brand-title {
+      font-family: 'Fredoka', sans-serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      display: flex;
+      align-items: center;
+      gap: 2px;
+    }
+    .footer-brand-title .orange-dot {
+      color: var(--orange);
+    }
+    .footer-sub {
+      color: var(--gray-muted);
+      font-size: 14px;
+      margin-top: 6px;
+      max-width: 320px;
+    }
+
+    .footer-units-center {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .footer-units-center h5 {
+      font-family: 'Sora', sans-serif;
+      font-size: 13px;
+      font-weight: 800;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+      margin-bottom: 16px;
+      color: var(--charcoal);
+      border-bottom: 2px solid var(--orange);
+      padding-bottom: 4px;
+      display: inline-block;
+    }
+    .footer-units-center ul {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    .footer-units-center ul a {
+      transition: color 0.15s ease, transform 0.15s ease;
+      display: inline-block;
+    }
+    .footer-units-center ul a:hover {
+      color: var(--orange);
+      transform: translateX(2px);
+    }
+
+    /* Orbiting Planetary Showcase */
+    .footer-anim-column {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .footer-orbit-stage {
+      position: relative;
+      width: 320px;
+      height: 320px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .orbit-center-hub {
+      position: absolute;
+      z-index: 10;
+      width: 110px;
+      height: 110px;
+      background: #FFFFFF;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 4px 4px 0px var(--border);
+      animation: hubPulse 4s ease-in-out infinite;
+    }
+    .orbit-center-hub img {
+      width: 85%;
+      height: auto;
+    }
+
+    @keyframes hubPulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.04); }
+    }
+
+    .orbit-track {
+      position: absolute;
+      width: 270px;
+      height: 270px;
+      border: 1.5px dashed #D1D5DB;
+      border-radius: 50%;
+      animation: orbitRotate 38s linear infinite;
+    }
+
+    @keyframes orbitRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(360deg); }
+    }
+
+    .orbit-satellite {
+      position: absolute;
+      width: 90px;
+      height: 44px;
+      margin-left: -45px;
+      margin-top: -22px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      animation: counterRotate 38s linear infinite;
+    }
+
+    @keyframes counterRotate {
+      from { transform: rotate(0deg); }
+      to { transform: rotate(-360deg); }
+    }
+
+    .sat-badge {
+      background: #FFFFFF;
+      border: 1.5px solid var(--border);
+      border-radius: 999px;
+      padding: 5px 12px;
+      box-shadow: 2px 2px 0px var(--border);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      white-space: nowrap;
+      max-width: 110px;
+    }
+
+    .sat-badge img {
+      max-height: 16px;
+      max-width: 82px;
+      object-fit: contain;
+    }
+
+    .sat-badge span {
+      font-family: 'Fredoka', 'Sora', sans-serif;
+      font-size: 11px;
+      font-weight: 700;
+      color: var(--charcoal);
+    }
+    .sat-badge span .accent {
+      color: var(--orange);
+    }
+
+    /* 6 Orbit Positions (60 deg increments along 135px radius) */
+    .sat-1 { top: 0px;   left: 135px; } /* 0° (Top) */
+    .sat-2 { top: 68px;  left: 252px; } /* 60° */
+    .sat-3 { top: 202px; left: 252px; } /* 120° */
+    .sat-4 { top: 270px; left: 135px; } /* 180° (Bottom) */
+    .sat-5 { top: 202px; left: 18px;  } /* 240° */
+    .sat-6 { top: 68px;  left: 18px;  } /* 300° */
+
+    .footer-anim-tag {
+      margin-top: 14px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 11px;
+      color: var(--gray-muted);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    .footer-bottom {
+      border-top: 1px solid #E5E7EB;
+      padding-top: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 13px;
+      color: var(--gray-muted);
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    /* Toast Notification */
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      background: var(--charcoal);
+      color: #fff;
+      padding: 16px 22px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      box-shadow: 4px 4px 0px var(--border);
+      font-size: 14px;
+      font-weight: 600;
+      z-index: 1000;
+      display: none;
+      align-items: center;
+      gap: 12px;
+    }
+    .toast.show {
+      display: flex;
+      animation: slideUp 0.25s ease-out;
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
+
+    /* Medium Screens */
+    @media (max-width: 960px) {
+      .hero-units-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .unit-card {
+        grid-template-columns: 1fr;
+      }
+      .unit-card-preview {
+        border-left: none;
+        border-top: 2.5px solid var(--border);
+      }
+      .interactive-grid {
+        grid-template-columns: 1fr;
+      }
+      .arch-duo-grid {
+        grid-template-columns: 1fr;
+      }
+      .unit-selection-grid {
+        grid-template-columns: 1fr;
+      }
+      .footer-grid-three {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 40px;
+      }
+      .footer-brand-col {
+        align-items: center;
+        text-align: center;
+      }
+      .footer-brand-title {
+        justify-content: center;
+      }
+      .footer-sub {
+        text-align: center;
+        margin: 6px auto 0;
+      }
+      .footer-units-center {
+        margin: 10px 0;
+      }
+    }
+
+    /* Mobile (Phones 360px–600px) */
+    @media (max-width: 600px) {
+      .container {
+        padding: 0 16px;
+      }
+
+      header.site-nav {
+        height: 64px;
+      }
+      .nav-inner {
+        height: 64px;
+      }
+      .nav-brand img {
+        height: 36px;
+      }
+      .nav-links {
+        display: none;
+      }
+
+      .hero-section {
+        padding: 40px 0 32px;
+      }
+      .hero-pill-badge {
+        font-size: 11px;
+        padding: 5px 14px;
+        margin-bottom: 18px;
+      }
+      .hero-logo-wrap {
+        margin-bottom: 20px;
+      }
+      .hero-logo-wrap img {
+        max-width: 86%;
+      }
+
+      .hero-tagline-wrap {
+        padding: 4px 6px;
+        margin-bottom: 16px;
+        width: 100%;
+      }
+      .hero-tagline {
+        font-size: clamp(2.1rem, 9.4vw, 2.6rem);
+        line-height: 1.1;
+      }
+      .tagline-brush-underline {
+        bottom: -6px;
+        height: 12px;
+      }
+
+      .hero-subhead {
+        font-size: 1rem;
+        line-height: 1.55;
+        margin-bottom: 28px;
+      }
+
+      .hero-units-grid {
+        grid-template-columns: 1fr;
+        gap: 12px;
+      }
+      .unit-hero-btn {
+        padding: 15px 18px;
+        font-size: 14px;
+      }
+
+      .ticker-bar {
+        margin: 36px 0 50px;
+        padding: 10px 0;
+      }
+
+      .units-container {
+        gap: 34px;
+        margin-bottom: 60px;
+      }
+
+      .unit-card-content {
+        padding: 24px 18px;
+      }
+      .unit-headline {
+        font-size: 1.25rem;
+      }
+      .unit-description {
+        font-size: 14px;
+        margin-bottom: 20px;
+      }
+
+      /* Stack features vertically to eliminate clipping */
+      .feature-grid {
+        grid-template-columns: 1fr;
+        row-gap: 6px;
+        padding-top: 14px;
+        margin-bottom: 24px;
+      }
+      .feature-label {
+        font-size: 13px;
+        white-space: normal;
+      }
+      .feature-val {
+        font-size: 13px;
+        padding-left: 14px;
+      }
+
+      /* Button mobile wrapping */
+      .unit-action-wrap {
+        flex-direction: column;
+        width: 100%;
+        gap: 10px;
+      }
+      .unit-action-wrap .btn-primary,
+      .unit-action-wrap .btn-secondary {
+        width: 100%;
+        justify-content: center;
+        white-space: normal;
+        text-align: center;
+        padding: 14px 18px;
+      }
+
+      .unit-card-preview {
+        padding: 24px 18px;
+      }
+      .preview-box {
+        padding: 18px;
+      }
+
+      .interactive-wrap {
+        padding: 24px 18px;
+        margin: 46px 0;
+      }
+      .interactive-grid {
+        gap: 24px;
+      }
+      .day-selector {
+        flex-direction: column;
+        gap: 8px;
+      }
+      .day-btn {
+        padding: 11px;
+      }
+      .slog-vs-win {
+        grid-template-columns: 1fr;
+      }
+      .sandbox-output {
+        padding: 18px;
+      }
+
+      /* Quick setup card fix for mobile */
+      .quick-setup-box {
+        font-size: 11px;
+        padding: 10px 12px;
+        word-break: break-word;
+        overflow-wrap: anywhere;
+        white-space: pre-wrap;
+      }
+
+      .system-arch-section {
+        padding: 28px 18px;
+        margin-bottom: 46px;
+      }
+      .arch-card {
+        padding: 20px 16px;
+      }
+
+      .newsletter-section {
+        padding: 28px 18px;
+        margin-bottom: 46px;
+      }
+      .newsletter-input-row {
+        flex-direction: column;
+      }
+      .newsletter-input-row button {
+        width: 100%;
+      }
+
+      /* Planetary orbit scaled to avoid horizontal bounds leak */
+      .footer-orbit-stage {
+        transform: scale(0.8);
+        margin: -24px auto;
+      }
+
+      /* Centered Footer on Mobile */
+      .footer-grid-three {
+        grid-template-columns: 1fr;
+        text-align: center;
+        gap: 36px;
+      }
+      .footer-brand-col {
+        align-items: center;
+        text-align: center;
+      }
+      .footer-brand-title {
+        font-size: 1.85rem;
+        justify-content: center;
+      }
+      .footer-sub {
+        text-align: center;
+        margin: 8px auto 0;
+        max-width: 290px;
+      }
+      .footer-units-center {
+        align-items: center;
+        text-align: center;
+      }
+      .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 8px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Navigation -->
+  <header class="site-nav">
+    <div class="container">
+      <div class="nav-inner">
+        <a href="#" class="nav-brand" title="structly.app">
+          <img src="structly_transparent_logo.png" alt="structly" />
+        </a>
+        <nav class="nav-links">
+          <a href="#everyday-ai">Everyday AI</a>
+          <a href="#career-forge">Career Forge</a>
+          <a href="#form-and-future">Form &amp; Future</a>
+          <a href="#plex-playlist-builder">Plex Builder</a>
+          <a href="#bookmark-archivist">Archivist</a>
+          <a href="#newsletter-hub" class="nav-cta">Get Updates</a>
+        </nav>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Section -->
+  <section class="hero-section">
+    <div class="container">
+      
+      <div class="hero-pill-badge">
+        <span class="pulse-dot"></span>
+        <span>Systems Behind The Experience</span>
+      </div>
+
+      <!-- Structly Logo Scaled Up 25% -->
+      <div class="hero-logo-wrap">
+        <img src="structly_transparent_logo.png" alt="structly logo" />
+      </div>
+
+      <!-- Stacked Headline Lockup with Sage Underline -->
+      <div class="hero-tagline-wrap">
+        <h1 class="hero-tagline">
+          <span class="tagline-top">Stop scrolling.</span>
+          <span class="tagline-bottom-wrap">
+            <span class="tagline-bottom-text">Start structuring.</span>
+            <!-- Hand-drawn Vector Brush Stroke in Sage Green -->
+            <svg class="tagline-brush-underline" viewBox="0 0 500 20" fill="none" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="none">
+              <path d="M4 14C85 11 230 8 496 11" stroke="#688F7A" stroke-width="11" stroke-linecap="round" stroke-linejoin="round" />
+            </svg>
+          </span>
+        </h1>
+      </div>
+
+      <p class="hero-subhead">
+        Six specialized platforms engineered for personal systems, intelligent career management, generative workflows, and modern media curation.
+      </p>
+
+      <!-- 3 Columns of Stacked Unit Anchor Buttons -->
+      <div class="hero-units-grid">
+        <a href="#everyday-ai" class="unit-hero-btn">
+          <span><span class="dot-tag orange"></span> Everyday AI</span>
+          <span class="btn-arrow">↓</span>
+        </a>
+        <a href="#career-forge" class="unit-hero-btn">
+          <span><span class="dot-tag orange"></span> Career Forge</span>
+          <span class="btn-arrow">↓</span>
+        </a>
+        <a href="#form-and-future" class="unit-hero-btn">
+          <span><span class="dot-tag"></span> Form &amp; Future</span>
+          <span class="btn-arrow">↓</span>
+        </a>
+        <a href="#plex-playlist-builder" class="unit-hero-btn">
+          <span><span class="dot-tag"></span> Plex Playlist Builder</span>
+          <span class="btn-arrow">↓</span>
+        </a>
+        <a href="#bookmark-archivist" class="unit-hero-btn">
+          <span><span class="dot-tag"></span> Bookmark Archivist</span>
+          <span class="btn-arrow">↓</span>
+        </a>
+        <a href="#source-forge" class="unit-hero-btn">
+          <span><span class="dot-tag"></span> Source Forge</span>
+          <span class="btn-arrow">↓</span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Marquee Ticker -->
+  <div class="ticker-bar">
+    <div class="ticker-track">
+      <span>• EVERYDAY AI: MWF 5-MINUTE DISPATCHES</span>
+      <span class="accent">• CAREER FORGE: RESUME SCORER &amp; DOSSIER ENGINE</span>
+      <span>• FORM &amp; FUTURE: THOUGHTFUL DISCOVERY</span>
+      <span class="accent">• PLEX PLAYLIST BUILDER: SMART MEDIA TAXONOMY</span>
+      <span>• BOOKMARK ARCHIVIST: TAB GRAVEYARD CHROME EXTENSION</span>
+      <span class="accent">• SOURCE FORGE: STRUCTURED PIPELINES</span>
+      <span>• EVERYDAY AI: MWF 5-MINUTE DISPATCHES</span>
+      <span class="accent">• CAREER FORGE: RESUME SCORER &amp; DOSSIER ENGINE</span>
+      <span>• FORM &amp; FUTURE: THOUGHTFUL DISCOVERY</span>
+      <span class="accent">• PLEX PLAYLIST BUILDER: SMART MEDIA TAXONOMY</span>
+    </div>
+  </div>
+
+  <!-- Specialized Business Units Section -->
+  <section class="container" id="units-section">
+    <div class="section-title-wrap">
+      <div class="badge-pill">Operating Ecosystem</div>
+      <h2 class="section-title">Specialized Business Units</h2>
+      <p class="section-desc">Focused applications solving discrete problems with systems-first thinking and high aesthetic discipline.</p>
+    </div>
+
+    <div class="units-container">
+
+      <!-- 1. Everyday AI -->
+      <article class="unit-card" id="everyday-ai">
+        <div class="unit-card-content">
+          <div>
+            <div class="unit-status-chip status-live">● Live Dispatch</div>
+            <div class="unit-logo-holder">
+              <svg viewBox="0 0 540 120" width="260" height="58" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <text x="5" y="92" font-family="'Sora', sans-serif" font-weight="800" font-size="84" fill="#3D405B" letter-spacing="-2">Everyday</text>
+                <rect x="372" y="24" width="22" height="7.5" rx="3.75" fill="#E07A5F" />
+                <rect x="367" y="44" width="25" height="7.5" rx="3.75" fill="#E07A5F" />
+                <rect x="356" y="64" width="30" height="7.5" rx="3.75" fill="#E07A5F" />
+                <text x="394" y="92" font-family="'Sora', sans-serif" font-weight="800" font-style="italic" font-size="86" fill="#E07A5F" letter-spacing="-3">AI</text>
+              </svg>
+            </div>
+            <h3 class="unit-headline">A practical brief by Structly.</h3>
+            <p class="unit-description">
+              Friendly coach, not tech hype reporter[cite: 2]. Practical 5-minute wins vs. 2-hour slogs delivered 3x weekly across work automation and home simplification[cite: 2].
+            </p>
+
+            <div class="feature-grid">
+              <div class="feature-label">Monday Work Win:</div>
+              <div class="feature-val">Automate routine docs, inbox triage, and team handoffs in five minutes[cite: 2].</div>
+
+              <div class="feature-label">Wednesday Home Sprint:</div>
+              <div class="feature-val">Rapid meal plans, grocery syncs, and domestic routines simplified[cite: 2].</div>
+
+              <div class="feature-label">Friday Deep Dive:</div>
+              <div class="feature-val">Accelerated personal learning sprints with tools like NotebookLM[cite: 2].</div>
+            </div>
+          </div>
+          <div class="unit-action-wrap">
+            <a href="#test-everyday-ai" class="btn-primary">Try Interactive Generator</a>
+            <a href="#newsletter-hub" class="btn-secondary">Subscribe to Dispatch</a>
+          </div>
+        </div>
+
+        <div class="unit-card-preview">
+          <div class="preview-box">
+            <div class="preview-box-header">
+              <span>Formula Preview</span>
+              <span>5-Min Win</span>
+            </div>
+            <div style="font-size: 13px; font-weight: 700; margin-bottom: 6px; color: var(--terracotta);">
+              ⏱️ 5-min win vs 2-hour slog
+            </div>
+            <p style="font-size: 13px; color: var(--charcoal-soft); margin-bottom: 12px;">
+              "What used to be a 2-hour slog of sorting email and drafting docs is now a 5-minute setup — cleared inbox, ready replies, time saved for real work."[cite: 2]
+            </p>
+            <div style="background: var(--peach-light); border-left: 3px solid var(--terracotta); padding: 8px 12px; border-radius: 6px; font-size: 12px; font-weight: 600;">
+              ✓ Works on free plan — no Pro token burn required[cite: 2]
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 2. Career Forge -->
+      <article class="unit-card" id="career-forge">
+        <div class="unit-card-content">
+          <div>
+            <div class="unit-status-chip status-dev">● Private Beta</div>
+            <div class="unit-logo-holder">
+              <div class="unit-typographic-logo">
+                Career <span class="accent-part">Forge</span>
+              </div>
+            </div>
+            <h3 class="unit-headline">Targeted Job Tracker &amp; Match Engine</h3>
+            <p class="unit-description">
+              Stop blasting generic resumes. Input target job descriptions to score alignment against your actual experience, generate rewritten resumes tailored to the posting, and produce interview-ready company dossiers in PDF format.
+            </p>
+
+            <div class="feature-grid">
+              <div class="feature-label">Role Match Scoring:</div>
+              <div class="feature-val">Evaluates postings against your background with clear pursue/pass advice.</div>
+
+              <div class="feature-label">Tailored Rewrites:</div>
+              <div class="feature-val">Generates ATS-aligned resumes and targeted cover letters for specific roles.</div>
+
+              <div class="feature-label">Interview PDF Dossier:</div>
+              <div class="feature-val">Compiles company intelligence, leadership profiles, and talking points in one PDF.</div>
+            </div>
+          </div>
+          <div class="unit-action-wrap">
+            <a href="#newsletter-hub" class="btn-primary">Join Beta Waitlist</a>
+          </div>
+        </div>
+
+        <div class="unit-card-preview">
+          <div class="preview-box">
+            <div class="preview-box-header">
+              <span>Pipeline Tracker</span>
+              <span>Matched #CF-882</span>
+            </div>
+            
+            <div class="dossier-step">
+              <div class="dossier-num">1</div>
+              <div class="dossier-step-text">
+                <strong>Input Job Spec &amp; Parse</strong>
+                <span>Extracted 14 core competencies &amp; tech stack requisites</span>
+              </div>
+            </div>
+
+            <div class="dossier-step">
+              <div class="dossier-num">2</div>
+              <div class="dossier-step-text">
+                <strong>Resume Alignment Score</strong>
+                <span>Scored against primary baseline profile</span>
+              </div>
+            </div>
+
+            <div class="score-badge">
+              <span style="font-size: 13px; font-weight: 700;">Verdict: Pursue High Match</span>
+              <span class="score-badge-val">94%</span>
+            </div>
+
+            <div class="dossier-step" style="margin-top: 14px;">
+              <div class="dossier-num">3</div>
+              <div class="dossier-step-text">
+                <strong>Export Interview Dossier (PDF)</strong>
+                <span>Custom resume + tailored cover letter + company research</span>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </article>
+
+      <!-- 3. Form & Future -->
+      <article class="unit-card" id="form-and-future">
+        <div class="unit-card-content">
+          <div>
+            <div class="unit-status-chip status-dev">● Lifestyle Brand &amp; Storefront</div>
+            <div class="unit-logo-holder form-future-holder">
+              <img src="horiz_form_logo_white2.png" alt="Form & Future" />
+            </div>
+            <h3 class="unit-headline">Thoughtfully modern living &amp; curated discovery.</h3>
+            <p class="unit-description">
+              The storefront and consumer expression of the Structly ecosystem[cite: 1]. Where Structly builds the underlying operational engines, Form &amp; Future brings the physical touchpoints, interior rhythm, and useful aesthetics to life[cite: 1].
+            </p>
+
+            <div class="feature-grid">
+              <div class="feature-label">Curated Objects:</div>
+              <div class="feature-val">Beautiful, useful discoveries found before everyone else discovers them.</div>
+
+              <div class="feature-label">Thoughtful Living:</div>
+              <div class="feature-val">Warm, smart, lightly playful essentials with zero clutter or cheap gadget hype.</div>
+            </div>
+          </div>
+          <div class="unit-action-wrap">
+            <a href="#newsletter-hub" class="btn-primary">Get Launch Notification</a>
+          </div>
+        </div>
+
+        <div class="unit-card-preview" style="background: #F4EFE6;">
+          <div class="preview-box">
+            <div class="preview-box-header">
+              <span>Brand Ethos</span>
+              <span style="color: var(--sage); font-weight: 700;">Thoughtful Living</span>
+            </div>
+            <p style="font-family: 'Fredoka', sans-serif; font-size: 1.25rem; margin-bottom: 8px; color: var(--charcoal); line-height: 1.3;">
+              "Find beautiful, useful things before everyone else discovers them."
+            </p>
+            <p style="font-size: 13px; color: var(--charcoal-soft); line-height: 1.5;">
+              Curated, warm, smart, and lightly playful. Zero aggressive countdowns, clutter, or cheap gadget hype.
+            </p>
+          </div>
+        </div>
+      </article>
+
+      <!-- 4. Plex Playlist Builder (Cleanly Stacked on 2 lines) -->
+      <article class="unit-card" id="plex-playlist-builder">
+        <div class="unit-card-content">
+          <div>
+            <div class="unit-status-chip status-dev">● In Build</div>
+            <div class="unit-logo-holder">
+              <div class="unit-typographic-logo stacked-logo">
+                <span>Plex Playlist</span>
+                <span class="accent-part">Builder</span>
+              </div>
+            </div>
+            <h3 class="unit-headline">Stop scrolling. Start structuring your media.</h3>
+            <p class="unit-description">
+              A modern media taxonomy platform that turns chaotic personal Plex servers into curated cinematic collections, auto-updating thematic marathons, and structured viewing rotations.
+            </p>
+
+            <div class="feature-grid">
+              <div class="feature-label">Smart Collections:</div>
+              <div class="feature-val">Rule-based playlists categorized dynamically by director, mood, era, or runtime.</div>
+
+              <div class="feature-label">Zero Endless Browsing:</div>
+              <div class="feature-val">Instant synchronization with your local Plex server token for ready queues.</div>
+            </div>
+          </div>
+          <div class="unit-action-wrap">
+            <a href="#newsletter-hub" class="btn-primary">Notify When Ready</a>
+          </div>
+        </div>
+
+        <div class="unit-card-preview">
+          <div class="preview-box">
+            <div class="preview-box-header">
+              <span>Collection Rule</span>
+              <span>Live API Sync</span>
+            </div>
+            <div style="font-family: 'JetBrains Mono', monospace; font-size: 12px; color: var(--charcoal);">
+              IF genre == "Sci-Fi" <br/>
+              AND decade IN [70s, 80s] <br/>
+              AND rating >= 7.8 <br/>
+              ORDER BY synth_score DESC;
+            </div>
+            <div style="margin-top: 14px; font-size: 12px; color: var(--gray-muted);">
+              ➔ Pushed 24 matched titles to "Analog Future Marathon"
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 5. Bookmark Archivist (Fully Contained & Responsive) -->
+      <article class="unit-card" id="bookmark-archivist">
+        <div class="unit-card-content">
+          <div>
+            <div class="unit-status-chip status-open">● Chrome Extension &amp; Open Source</div>
+            <div class="unit-logo-holder">
+              <div class="unit-typographic-logo">
+                Bookmark <span class="accent-part">Archivist</span>
+              </div>
+            </div>
+            <h3 class="unit-headline">Rescuing tabs from digital purgatory.</h3>
+            <p class="unit-description">
+              Chrome extension and automated offline archiver for links, reading lists, and reference sites. Captures full-text, PDF snapshot, and metadata before link rot turns your bookmarks into 404 errors.
+            </p>
+
+            <div class="feature-grid">
+              <div class="feature-label">Chrome Extension:</div>
+              <div class="feature-val">One-click browser archive shortcut with instant background snapshot syncing.</div>
+
+              <div class="feature-label">Zero 404s Offline:</div>
+              <div class="feature-val">Downloads clean reader-mode HTML, readable Markdown, and archived PDFs.</div>
+
+              <div class="feature-label">Self-Hostable Core:</div>
+              <div class="feature-val">Lightweight Dockerized backend engineered for local NAS and homelab servers.</div>
+            </div>
+          </div>
+          <div class="unit-action-wrap">
+            <a href="https://github.com" target="_blank" rel="noopener noreferrer" class="btn-primary">
+              <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" style="flex-shrink: 0;"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+              <span>Download on GitHub</span>
+            </a>
+            <a href="#newsletter-hub" class="btn-secondary">Extension Updates</a>
+          </div>
+        </div>
+
+        <div class="unit-card-preview">
+          <div class="preview-box">
+            <div class="preview-box-header">
+              <span>Chrome Archive Status</span>
+              <span style="color: var(--sage); font-weight: 700;">Active</span>
+            </div>
+            <div style="font-size: 13px; margin-bottom: 8px;">
+              <strong>Saved:</strong> Building Sustainable DAM Pipelines
+            </div>
+            <div class="quick-setup-box" style="margin: 4px 0 10px;">
+              200 OK • Readability Parsed • PDF Snap Ready
+            </div>
+            <div style="font-size: 11px; color: var(--gray-muted);">
+              Stored in /vault/storage/2026/09/dam_pipelines.pdf
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- 6. Source Forge -->
+      <article class="unit-card" id="source-forge">
+        <div class="unit-card-content">
+          <div>
+            <div class="unit-status-chip status-dev">● In Build</div>
+            <div class="unit-logo-holder">
+              <div class="unit-typographic-logo">
+                Source <span class="accent-part">Forge</span>
+              </div>
+            </div>
+            <h3 class="unit-headline">Structured data transforms without the fragility.</h3>
+            <p class="unit-description">
+              Lightweight scripts, CSV splitters, schema normalizers, and ingestion bridges built to sanitize chaotic operational exports into clean Airtable, SQL, and warehouse records.
+            </p>
+
+            <div class="feature-grid">
+              <div class="feature-label">Schema Hygiene:</div>
+              <div class="feature-val">Automatic deduplication, header sanitization, and database field mapping.</div>
+
+              <div class="feature-label">Deterministic Rules:</div>
+              <div class="feature-val">Fast local Python and Pandas transformations that run without cloud subscription locks.</div>
+            </div>
+          </div>
+          <div class="unit-action-wrap">
+            <a href="#newsletter-hub" class="btn-primary">Join Pipeline Alpha</a>
+          </div>
+        </div>
+
+        <div class="unit-card-preview">
+          <div class="preview-box">
+            <div class="preview-box-header">
+              <span>Pipeline Flow</span>
+              <span>Python / Pandas</span>
+            </div>
+            <div class="quick-setup-box" style="margin:0;">
+              raw_export.csv ➔ clean_headers() ➔ split_batches(500) ➔ airtable_upsert()
+            </div>
+            <div style="margin-top: 10px; font-size: 12px; color: var(--sage); font-weight: 600;">
+              ✓ 10,000 rows normalized in 4.2 seconds
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- Interactive Sandbox: Test Everyday AI in Real Time -->
+  <section class="container" id="test-everyday-ai">
+    <div class="interactive-wrap">
+      <div class="section-title-wrap" style="margin-bottom: 24px;">
+        <div class="badge-pill">Interactive Live Demo</div>
+        <h2 class="section-title">Test Everyday AI in Real Time</h2>
+        <p class="section-desc">Preview the exact Monday / Wednesday / Friday win formulas delivered straight to subscribers[cite: 2].</p>
+      </div>
+
+      <div class="interactive-grid">
+        <div class="sandbox-controls">
+          <label style="font-size: 14px; font-weight: 700;">Select Edition:</label>
+          <div class="day-selector">
+            <button class="day-btn active" onclick="setDay('monday')">Mon (Work)</button>
+            <button class="day-btn" onclick="setDay('wednesday')">Wed (Home)</button>
+            <button class="day-btn" onclick="setDay('friday')">Fri (Deep Dive)</button>
+          </div>
+
+          <div style="margin-top: 16px;">
+            <label style="font-size: 13px; font-weight: 600; color: var(--charcoal-soft); display: block; margin-bottom: 8px;">
+              Get this specific edition directly:
+            </label>
+            <form onsubmit="handleDemoSubmit(event)" style="display: flex; gap: 8px;">
+              <input type="email" placeholder="you@workplace.com" required style="flex:1; border: 2px solid var(--border); border-radius: 10px; padding: 12px 14px; font-size: 14px; min-width: 0;" />
+              <button type="submit" class="btn-primary" style="padding: 12px 20px; font-size: 13px;">Send Win</button>
+            </form>
+          </div>
+        </div>
+
+        <div class="sandbox-output" id="sandbox-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; gap: 8px;">
+            <span id="output-badge" style="font-family: 'JetBrains Mono', monospace; font-size: 11px; font-weight: 700; text-transform: uppercase; background: var(--peach); padding: 4px 10px; border-radius: 6px; border: 1.5px solid var(--terracotta); white-space: nowrap;">
+              Monday Work Win
+            </span>
+            <span style="font-size: 12px; color: var(--gray-muted); font-weight: 600; white-space: nowrap;">Free Tier Tool</span>
+          </div>
+
+          <h4 id="output-headline" style="font-family: 'Sora', sans-serif; font-size: 17px; font-weight: 700; margin-bottom: 14px;">
+            Automate routine inbox triage with native Gmail AI rules
+          </h4>
+
+          <div class="slog-vs-win">
+            <div class="slog-box">
+              <strong style="color: #991B1B;">2-Hour Slog:</strong>
+              <div id="output-slog" style="margin-top: 4px;">Manually flagging, sorting, and filing 80 daily newsletter digests and status reports.</div>
+            </div>
+            <div class="win-box">
+              <strong style="color: #166534;">5-Min Win:</strong>
+              <div id="output-win" style="margin-top: 4px;">One-time prompt rule + smart label filter saves 25 minutes every morning.</div>
+            </div>
+          </div>
+
+          <div class="quick-setup-box" id="output-setup">Quick setup: Gmail → Settings → AI filters → Apply 'Brief Daily' label</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- System Architecture Section -->
+  <section class="container" id="form-and-future-arch">
+    <div class="system-arch-section">
+      <div class="badge-pill">Two Brands. One DNA.</div>
+      <h2 class="section-title">System Architecture</h2>
+      <p class="section-desc">
+        Structly functions as the builder and engineering foundation[cite: 1]. Form &amp; Future functions as the curated storefront bringing tactile clarity to life[cite: 1].
+      </p>
+
+      <div class="arch-duo-grid">
+        <div class="arch-card highlight">
+          <h4>
+            <span>structly.app</span>
+            <span style="font-size: 11px; font-weight: 700; color: var(--orange); text-transform: uppercase;">Core Engine</span>
+          </h4>
+          <p>
+            The builder. The backend systems, automation frameworks, data wranglers, and productivity intelligence powering every unit[cite: 1].
+          </p>
+          <ul class="arch-specs-list">
+            <li>Everyday AI delivery pipeline</li>
+            <li>Career Forge matching &amp; PDF compiler</li>
+            <li>Bookmark Archivist snapshot engine</li>
+            <li>Plex metadata taxonomies &amp; rule engines</li>
+          </ul>
+        </div>
+
+        <div class="arch-card">
+          <h4>
+            <span>Form &amp; Future</span>
+            <span style="font-size: 11px; font-weight: 700; color: var(--sage); text-transform: uppercase;">Lifestyle &amp; Storefront</span>
+          </h4>
+          <p>
+            The storefront. The lifestyle brand and discovery experience, translating digital order into physical spaces, goods, and thoughtful routines[cite: 1].
+          </p>
+          <ul class="arch-specs-list">
+            <li>Curated everyday tools &amp; home rhythm[cite: 1]</li>
+            <li>Modern physical goods &amp; tactile accessories</li>
+            <li>Approachable design &amp; warm natural tones[cite: 1]</li>
+            <li>Community of conscious system builders</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Notification & Newsletter Hub Section -->
+  <section class="container" id="newsletter-hub">
+    <div class="newsletter-section">
+      <div class="section-title-wrap" style="text-align: center; margin-bottom: 20px;">
+        <div class="badge-pill">Direct Dispatches</div>
+        <h2 class="section-title">Newsletter &amp; Updates Hub</h2>
+        <p class="section-desc" style="margin: 8px auto 0;">
+          Select the active platforms you want to receive dispatches from. In-development units will unlock as betas go live.
+        </p>
+      </div>
+
+      <div class="newsletter-form-wrap">
+        <form id="newsletter-form" onsubmit="handleNewsletterSubmit(event)">
+          
+          <div class="unit-selection-grid">
+            <label class="newsletter-checkbox-label">
+              <div>
+                <input type="checkbox" name="units" value="everyday_ai" checked />
+                <span>Everyday AI (MWF)</span>
+              </div>
+              <span class="pill-status-micro micro-live">Live</span>
+            </label>
+
+            <label class="newsletter-checkbox-label">
+              <div>
+                <input type="checkbox" name="units" value="bookmark_archivist" />
+                <span>Bookmark Archivist</span>
+              </div>
+              <span class="pill-status-micro micro-live">Live</span>
+            </label>
+
+            <label class="newsletter-checkbox-label disabled-state" title="Opening soon when beta rolls out">
+              <div>
+                <input type="checkbox" name="units" value="career_forge" disabled />
+                <span>Career Forge</span>
+              </div>
+              <span class="pill-status-micro micro-waitlist">In Dev</span>
+            </label>
+
+            <label class="newsletter-checkbox-label disabled-state" title="Opening soon when storefront launches">
+              <div>
+                <input type="checkbox" name="units" value="form_and_future" disabled />
+                <span>Form &amp; Future</span>
+              </div>
+              <span class="pill-status-micro micro-waitlist">Storefront Soon</span>
+            </label>
+
+            <label class="newsletter-checkbox-label disabled-state" title="In development">
+              <div>
+                <input type="checkbox" name="units" value="plex_playlist" disabled />
+                <span>Plex Playlist Builder</span>
+              </div>
+              <span class="pill-status-micro micro-waitlist">In Dev</span>
+            </label>
+
+            <label class="newsletter-checkbox-label disabled-state" title="In development">
+              <div>
+                <input type="checkbox" name="units" value="source_forge" disabled />
+                <span>Source Forge</span>
+              </div>
+              <span class="pill-status-micro micro-waitlist">In Dev</span>
+            </label>
+          </div>
+
+          <div class="newsletter-input-row">
+            <input type="email" id="newsletter-email" placeholder="Enter your email address..." required />
+            <button type="submit" class="btn-primary" style="padding: 14px 28px;">Subscribe to Updates</button>
+          </div>
+          <div style="font-size: 11px; color: var(--gray-muted); margin-top: 10px; text-align: center;">
+            No spam. Strictly practical dispatches. One-click unsubscribe anytime.
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- Redesigned Footer (Fully Centered on Mobile) -->
+  <footer class="site-footer">
+    <div class="container">
+      <div class="footer-grid-three">
+        
+        <!-- Brand Statement -->
+        <div class="footer-brand-col">
+          <div class="footer-brand-title">
+            structly<span class="orange-dot">.app</span>
+          </div>
+          <p class="footer-sub">
+            The systems behind the experience. Structured for life[cite: 1].
+          </p>
+        </div>
+
+        <!-- Operating Units -->
+        <div class="footer-units-center">
+          <h5>Operating Units</h5>
+          <ul>
+            <li><a href="#everyday-ai">Everyday AI</a></li>
+            <li><a href="#career-forge">Career Forge</a></li>
+            <li><a href="#form-and-future">Form &amp; Future</a></li>
+            <li><a href="#plex-playlist-builder">Plex Playlist Builder</a></li>
+            <li><a href="#bookmark-archivist">Bookmark Archivist</a></li>
+            <li><a href="#source-forge">Source Forge</a></li>
+          </ul>
+        </div>
+
+        <!-- Orbit Showcase -->
+        <div class="footer-anim-column">
+          <div class="footer-orbit-stage">
+            
+            <!-- Central Structly Core Hub -->
+            <div class="orbit-center-hub" title="structly.app core">
+              <img src="structly_transparent_logo.png" alt="structly" />
+            </div>
+
+            <!-- 6 Orbiting Satellites -->
+            <div class="orbit-track">
+              
+              <!-- 1. Everyday AI -->
+              <div class="orbit-satellite sat-1">
+                <div class="sat-badge" title="Everyday AI">
+                  <svg viewBox="0 0 540 120" width="76" height="17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <text x="5" y="92" font-family="'Sora', sans-serif" font-weight="800" font-size="84" fill="#3D405B" letter-spacing="-2">Everyday</text>
+                    <rect x="372" y="24" width="22" height="7.5" rx="3.75" fill="#E07A5F" />
+                    <rect x="367" y="44" width="25" height="7.5" rx="3.75" fill="#E07A5F" />
+                    <rect x="356" y="64" width="30" height="7.5" rx="3.75" fill="#E07A5F" />
+                    <text x="394" y="92" font-family="'Sora', sans-serif" font-weight="800" font-style="italic" font-size="86" fill="#E07A5F" letter-spacing="-3">AI</text>
+                  </svg>
+                </div>
+              </div>
+
+              <!-- 2. Form & Future -->
+              <div class="orbit-satellite sat-2">
+                <div class="sat-badge" title="Form & Future">
+                  <img src="horiz_form_logo_white2.png" alt="Form & Future" />
+                </div>
+              </div>
+
+              <!-- 3. Career Forge -->
+              <div class="orbit-satellite sat-3">
+                <div class="sat-badge" title="Career Forge">
+                  <span>Career <span class="accent">Forge</span></span>
+                </div>
+              </div>
+
+              <!-- 4. Plex Playlist Builder -->
+              <div class="orbit-satellite sat-4">
+                <div class="sat-badge" title="Plex Playlist Builder">
+                  <span>Plex <span class="accent">Builder</span></span>
+                </div>
+              </div>
+
+              <!-- 5. Bookmark Archivist -->
+              <div class="orbit-satellite sat-5">
+                <div class="sat-badge" title="Bookmark Archivist">
+                  <span>Bookmark <span class="accent">Vault</span></span>
+                </div>
+              </div>
+
+              <!-- 6. Source Forge -->
+              <div class="orbit-satellite sat-6">
+                <div class="sat-badge" title="Source Forge">
+                  <span>Source <span class="accent">Forge</span></span>
+                </div>
+              </div>
+
+            </div>
+          </div>
+          <div class="footer-anim-tag">• connected ecosystem •</div>
+        </div>
+
+      </div>
+
+      <div class="footer-bottom">
+        <div>&copy; 2026 structly.app. All rights reserved.</div>
+        <div>Stop scrolling. Start structuring.</div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Toast Notification Element -->
+  <div class="toast" id="toast-notify">
+    <span id="toast-message">Success message</span>
+  </div>
+
+  <script>
+    const demoData = {
+      monday: {
+        badge: "Monday Work Win",
+        headline: "Automate routine inbox triage with native Gmail AI rules",
+        slog: "Manually flagging, sorting, and filing 80 daily newsletter digests and status reports.",
+        win: "One-time prompt rule + smart label filter saves 25 minutes every morning.",
+        setup: "Quick setup: Gmail → Settings → AI filters → Apply 'Brief Daily' label"
+      },
+      wednesday: {
+        badge: "Wednesday Home Sprint",
+        headline: "Turn pantry inventory into 5 tailored dinner recipes in 60 seconds",
+        slog: "Staring into the fridge, debating takeout, and wandering supermarket aisles.",
+        win: "Take 1 photo of the fridge → Prompt AI for recipes under 30 minutes with zero nut allergens.",
+        setup: "Quick setup: ChatGPT Voice or Keep → 'Plan 5 dinners with pantry staples' → Sync to Keep list"
+      },
+      friday: {
+        badge: "Friday Deep Dive",
+        headline: "Build a persistent knowledge tutor using NotebookLM + Antigravity",
+        slog: "Reading 4 disparate 50-page PDF reports and manually distilling key stakeholder notes.",
+        win: "Upload PDFs to NotebookLM → Generate Studio Audio brief + interactive flashcard quiz.",
+        setup: "Quick setup: NotebookLM → Studio → Create Audio Overview + Summary Notes"
+      }
+    };
+
+    function setDay(day) {
+      document.querySelectorAll('.day-btn').forEach(btn => btn.classList.remove('active'));
+      const activeBtn = window.event ? window.event.target : null;
+      if (activeBtn) activeBtn.classList.add('active');
+
+      const data = demoData[day];
+      document.getElementById('output-badge').innerText = data.badge;
+      document.getElementById('output-headline').innerText = data.headline;
+      document.getElementById('output-slog').innerText = data.slog;
+      document.getElementById('output-win').innerText = data.win;
+      document.getElementById('output-setup').innerText = data.setup;
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast-notify');
+      const text = document.getElementById('toast-message');
+      text.innerText = msg;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3500);
+    }
+
+    function handleDemoSubmit(e) {
+      e.preventDefault();
+      showToast("Dispatch preview sent! Check your inbox.");
+      e.target.reset();
+    }
+
+    function handleNewsletterSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById('newsletter-email').value;
+      const checkedBoxes = Array.from(document.querySelectorAll('input[name="units"]:checked')).map(cb => cb.value);
+      
+      showToast(`Subscribed ${email} to ${checkedBoxes.length} active dispatches!`);
+      document.getElementById('newsletter-form').reset();
+    }
+  </script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 540 130" width="540" height="130" fill="none">
+  <defs>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Sora:ital,wght@0,800;1,800&amp;display=swap');
+      .txt-everyday {
+        font-family: 'Sora', sans-serif;
+        font-weight: 800;
+        font-size: 82px;
+        fill: #3D405B;
+        letter-spacing: -1.5px;
+      }
+      .txt-ai {
+        font-family: 'Sora', sans-serif;
+        font-weight: 800;
+        font-style: italic;
+        font-size: 84px;
+        fill: #E07A5F;
+        letter-spacing: -2px;
+      }
+    </style>
+  </defs>
+
+  <!-- "Everyday" in Charcoal #3D405B -->
+  <text x="10" y="96" class="txt-everyday">Everyday</text>
+
+  <!-- 3 Terracotta Speed Dashes -->
+  <rect x="372" y="24" width="22" height="7.5" rx="3.75" fill="#E07A5F" />
+  <rect x="367" y="44" width="25" height="7.5" rx="3.75" fill="#E07A5F" />
+  <rect x="356" y="64" width="30" height="7.5" rx="3.75" fill="#E07A5F" />
+
+  <!-- "AI" in Terracotta #E07A5F -->
+  <text x="396" y="96" class="txt-ai">AI</text>
+</svg>
